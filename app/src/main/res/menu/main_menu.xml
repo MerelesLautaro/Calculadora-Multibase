@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/act_operaciones"
+        android:title="@string/operaciones"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/act_binario"
+        android:title="@string/binario"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/act_octal"
+        android:title="@string/octal"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/act_decimal"
+        android:title="@string/decimal"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/act_hexadecimal"
+        android:title="@string/hexadeicmal"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/act_resolvente"
+        android:title="@string/resolvente"
+        app:showAsAction="never"/>
+
+</menu>
