@@ -8,4 +8,27 @@
     <string name="binario">Binario</string>
     <string name="texto_operacion_placeholder">%s</string>
     <string name="desarollado_por_mereles_lautaro_n_pre_release_v_1_0_0">Desarollado por Mereles Lautaro \n Pre-release v(1.0.0)</string>
+    <string name="d">D</string>
+    <string name="e">E</string>
+    <string name="f">F</string>
+    <string name="delete">DELETE</string>
+    <string name="a">A</string>
+    <string name="b">B</string>
+    <string name="c">C</string>
+    <string name="division">%</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="x">X</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="resta">-</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="suma">+</string>
+    <string name="coma">,</string>
+    <string name="_0">0</string>
+    <string name="igual">=</string>
 </resources>
