@@ -34,4 +34,6 @@
     <string name="ingrese_valor_c">Ingrese valor c:</string>
     <string name="ingrese_valor_b">Ingrese valor b:</string>
     <string name="ingrese_valor_a">Ingrese valor a:</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="introduzca_el_valor_de_a">Introduzca el valor de A</string>
 </resources>

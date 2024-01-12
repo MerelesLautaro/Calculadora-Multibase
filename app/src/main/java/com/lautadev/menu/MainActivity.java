@@ -1,6 +1,8 @@
 package com.lautadev.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -8,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,11 +27,20 @@ public class MainActivity extends AppCompatActivity {
 
     private Button[] buttonsDisableDecimal;
 
+    private Button[] buttonsEnableAll;
+
     private String numeroActual = ""; // Variable para almacenar los números ingresados
     private String operador = ""; // Variable para almacenar el operador seleccionado
     private String primerNumero = ""; // Variable para almacenar el primer número
 
     private int itemId;
+
+    private String tipoOperacion;
+
+    public void cambiarActivity(View view){
+        Intent siguiente = new Intent(this, MainActivity2.class);
+        startActivity(siguiente);
+    }
 
     private void manejarOperador(String operador) {
         if(numeroActual.isEmpty() && primerNumero.isEmpty()){
@@ -179,6 +192,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("tipo_operacion")) {
+            tipoOperacion = intent.getStringExtra("tipo_operacion");
+            System.out.println("el valor tipo operacion es: "+tipoOperacion);
+        }
+
         // Asignar variable a los botones mediante el ID
         txtTextoOperacion = findViewById(R.id.txtOperacion);
         txtTextoOperacion.setFocusable(true);
@@ -296,7 +315,17 @@ public class MainActivity extends AppCompatActivity {
 
         buttonsDisableOperador = new Button[]{
           btnButtonSuma, btnButtonResta, btnButtonMultiplicacion,
-          btnButtonDivision, btnButtonDelete, btnButtonDecimal
+          btnButtonDivision, btnButtonDelete
+        };
+
+        buttonsEnableAll = new Button[]{
+                btnButtonA, btnButtonB, btnButtonC,
+                btnButtonD, btnButtonE, btnButtonF,
+                btnButtonDos, btnButtonTres, btnButtonCuatro,
+                btnButtonCinco, btnButtonSeis, btnButtonSiete, btnButtonOcho,
+                btnButtonNueve, btnButtonDecimal, btnButtonCero, btnButtonUno,
+                btnButtonSuma, btnButtonResta, btnButtonMultiplicacion,
+                btnButtonDivision, btnButtonDelete
         };
 
     }
@@ -304,9 +333,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        updateTitle(getString(R.string.decimal)); // Establecer por defecto en 'Decimal'
-        itemId = R.id.act_decimal; // Establecer por defecto en 'Decimal'
-        enableButtons(buttonsDisableDecimal, false); // Deshabilitar botones hexadecimales
+            if(Objects.equals(tipoOperacion, "Binario")){
+                updateTitle(getString(R.string.binario));
+                enableButtonsBi(buttonsToDisableBinario,false);
+                itemId = R.id.act_binario;
+            } else if (Objects.equals(tipoOperacion, "Hexadecimal")) {
+                updateTitle(getString(R.string.hexadecimal));
+                enableButtons(buttonsToDisableHex,false);
+                itemId = R.id.act_hexadecimal;
+            } else if (Objects.equals(tipoOperacion, "Octal")) {
+                updateTitle(getString(R.string.octal));
+                enableButtonsOctal(buttonsToDisableOctal);
+                itemId = R.id.act_octal;
+            } else {
+                updateTitle(getString(R.string.decimal)); // Establecer por defecto en 'Decimal'
+                itemId = R.id.act_decimal; // Establecer por defecto en 'Decimal'
+                enableButtonsDecimal(buttonsDisableDecimal,false);
+            }
         return true;
     }
 
@@ -315,8 +358,7 @@ public class MainActivity extends AppCompatActivity {
         // Obtener el id del elemento del menú seleccionado
         itemId = item.getItemId();
         // Resetear valor boleano de los numeros para que no halla problemas con variables globales
-        enableButtonsBi(buttonsToDisableBinario,true);
-        enableButtonsOperador(buttonsDisableOperador,true);
+        enableButtonsAll(buttonsEnableAll,true);
 
         // Verificar qué opción se ha seleccionado y actualizar el título del menú OPERACIONES
         if (itemId == R.id.act_binario) {
@@ -341,8 +383,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.act_resolvente) {
             updateTitle(getString(R.string.resolvente));
-            enableButtonsDecimal(buttonsDisableDecimal,false);
-            funcionLimpiarTodo();
+            cambiarActivity(null);
             return true;
         }
 
@@ -385,5 +426,13 @@ public class MainActivity extends AppCompatActivity {
             buttons.setEnabled(isEnabledOperador);
         }
     }
+
+    private void enableButtonsAll(Button[] ignoredButtonsOperator, boolean isEnabledAll) {
+        for (Button buttons : buttonsEnableAll) {
+            buttons.setEnabled(isEnabledAll);
+        }
+    }
+
+
 
 }
