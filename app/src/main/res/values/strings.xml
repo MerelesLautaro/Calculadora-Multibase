@@ -31,4 +31,7 @@
     <string name="coma">,</string>
     <string name="_0">0</string>
     <string name="igual">=</string>
+    <string name="ingrese_valor_c">Ingrese valor c:</string>
+    <string name="ingrese_valor_b">Ingrese valor b:</string>
+    <string name="ingrese_valor_a">Ingrese valor a:</string>
 </resources>

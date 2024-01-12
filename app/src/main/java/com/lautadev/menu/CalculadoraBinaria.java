@@ -27,7 +27,7 @@ public class CalculadoraBinaria {
         int decimalNum2 = Integer.parseInt(num2, 2);
 
         if (decimalNum2 == 0) {
-            return "Error: división por cero";
+            return "NaN";
         }
 
         int division = decimalNum1 / decimalNum2;

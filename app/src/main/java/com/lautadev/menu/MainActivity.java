@@ -13,12 +13,15 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtTextoOperacion;
     private TextView txtVistaPreliminar;
-
     private Button[] buttonsToDisableHex;
 
     private Button[] buttonsToDisableBinario;
 
     private Button[] buttonsToDisableOctal;
+
+    private Button[] buttonsDisableOperador;
+
+    private Button[] buttonsDisableDecimal;
 
     private String numeroActual = ""; // Variable para almacenar los números ingresados
     private String operador = ""; // Variable para almacenar el operador seleccionado
@@ -30,19 +33,19 @@ public class MainActivity extends AppCompatActivity {
         if(numeroActual.isEmpty() && primerNumero.isEmpty()){
             this.operador = operador;
             numeroActual = "0";
-            txtVistaPreliminar.setText("0" + operador);
+            txtVistaPreliminar.setText(String.format("0%s", operador));
         }
-            if (!numeroActual.isEmpty()) {
+        if (!numeroActual.isEmpty()) {
             // Si hay un número actual, se guarda como el segundo número
             primerNumero = numeroActual;
             this.operador = operador;
             numeroActual = ""; // Se reinicia el número actual para el siguiente ingreso
-            txtVistaPreliminar.setText(primerNumero + " " + operador); // Mostrar la operación en curso
-            } else if (!primerNumero.isEmpty()){
+            txtVistaPreliminar.setText(String.format("%s %s", primerNumero, operador)); // Mostrar la operación en curso
+        } else if (!primerNumero.isEmpty()){
             this.operador = operador;
-            txtVistaPreliminar.setText(primerNumero+ " " + operador);
+            txtVistaPreliminar.setText(String.format("%s %s", primerNumero, operador));
             numeroActual = "";
-            }
+        }
     }
 
     private void manejarNumero(String numero) {
@@ -69,8 +72,15 @@ public class MainActivity extends AppCompatActivity {
                     resultado = String.valueOf(Calculadora.multiplicar(valor1, valor2));
                     break;
                 case "/":
-                    resultado = String.valueOf(Calculadora.dividir(valor1, valor2));
-                    break;
+                    double resultadoDivisionDecimal = Calculadora.dividir(valor1, valor2);
+                    if (Double.isNaN(resultadoDivisionDecimal) || resultadoDivisionDecimal == Double.POSITIVE_INFINITY || resultadoDivisionDecimal == Double.NEGATIVE_INFINITY) {
+                        resultado = String.valueOf(resultadoDivisionDecimal);
+                        enableButtonsOperador(buttonsDisableOperador,false);
+                        return resultado;
+                    }
+                    resultado = String.valueOf(resultadoDivisionDecimal);
+                    return resultado;
+
                 default:
                     resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
             }
@@ -86,12 +96,18 @@ public class MainActivity extends AppCompatActivity {
                     resultado = CalculadoraOctal.multiplicarOctal(num1, num2);
                     break;
                 case "/":
-                    resultado = CalculadoraOctal.dividirOctal(num1, num2);
-                    break;
+                    String resultadoDivisionOctal = CalculadoraOctal.dividirOctal(num1, num2);
+                    if(resultadoDivisionOctal.equals("NaN")){
+                        resultado = resultadoDivisionOctal;
+                        enableButtonsOperador(buttonsDisableOperador,false);
+                        return resultado;
+                    }
+                    resultado = resultadoDivisionOctal;
+                    return resultado;
                 default:
                     resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
             }
-            }else if (itemId == R.id.act_hexadecimal) {
+        }else if (itemId == R.id.act_hexadecimal) {
             switch (operador) {
                 case "+":
                     resultado = CalculadoraHex.sumarHex(num1, num2);
@@ -103,12 +119,18 @@ public class MainActivity extends AppCompatActivity {
                     resultado = CalculadoraHex.multiplicarHex(num1, num2);
                     break;
                 case "/":
-                    resultado = CalculadoraHex.dividirHex(num1, num2);
-                    break;
+                    String resultadoDivisionHex = CalculadoraOctal.dividirOctal(num1, num2);
+                    if(resultadoDivisionHex.equals("NaN")){
+                        resultado = resultadoDivisionHex;
+                        enableButtonsOperador(buttonsDisableOperador,false);
+                        return resultado;
+                    }
+                    resultado = resultadoDivisionHex;
+                    return resultado;
                 default:
                     resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
             }
-            }else if (itemId == R.id.act_binario) {
+        }else if (itemId == R.id.act_binario) {
             switch (operador) {
                 case "+":
                     resultado = CalculadoraBinaria.sumarBi(num1, num2);
@@ -120,15 +142,21 @@ public class MainActivity extends AppCompatActivity {
                     resultado = CalculadoraBinaria.multiplicarBi(num1, num2);
                     break;
                 case "/":
-                    resultado = CalculadoraBinaria.dividirBi(num1, num2);
-                    break;
+                    String resultadoDivisionBi = CalculadoraOctal.dividirOctal(num1, num2);
+                    if(resultadoDivisionBi.equals("NaN")){
+                        resultado = resultadoDivisionBi;
+                        enableButtonsOperador(buttonsDisableOperador,false);
+                        return resultado;
+                    }
+                    resultado = resultadoDivisionBi;
+                    return resultado;
                 default:
                     resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
             }
-            } else {
+        } else {
             // Manejo de otros casos o valores por defecto
             return "0";
-            }
+        }
         return resultado;
     }
     private void funcionDelete() {
@@ -195,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 txtVistaPreliminar.setText(""); // Limpiar la vista preliminar
                 primerNumero = String.valueOf(resultado); // El resultado se convierte en el primer número para futuras operaciones
                 numeroActual = ""; // Se reinicia el número actual
-                operador = ""; // Se reinicia el operador
+                operador = ""; // Se reinicia el operador//
             }
         });
 
@@ -218,13 +246,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Crear un método genérico para manejar el clic en los botones
-        View.OnClickListener buttonClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button clickedButton = (Button) v;
-                manejarNumero(clickedButton.getText().toString());
-                //resetOperadores(); // Reiniciar los operadores al ingresar un número
-            }
+        View.OnClickListener buttonClickListener = v -> {
+            enableButtonsOperador(buttonsDisableOperador,true);
+            Button clickedButton = (Button) v;
+            manejarNumero(clickedButton.getText().toString());
+            //resetOperadores(); // Reiniciar los operadores al ingresar un número
         };
 
         // Asignar el mismo Listener a múltiples botones
@@ -247,14 +273,17 @@ public class MainActivity extends AppCompatActivity {
 
         //Botones que se habilitan o desabilitan segun la operacion a realizar.
         buttonsToDisableHex = new Button[]{
-                 btnButtonA, btnButtonB, btnButtonC,
-                 btnButtonD, btnButtonE, btnButtonF, btnButtonDecimal
+                btnButtonDecimal
+        };
+
+        buttonsDisableDecimal = new Button[]{
+                btnButtonA, btnButtonB, btnButtonC,
+                btnButtonD, btnButtonE, btnButtonF
         };
 
         buttonsToDisableOctal= new Button[]{
-                btnButtonA, btnButtonB, btnButtonC, btnButtonDecimal,
-                btnButtonD, btnButtonE, btnButtonF, btnButtonNueve,
-                btnButtonOcho
+                btnButtonA, btnButtonB, btnButtonC, btnButtonD,
+                btnButtonE, btnButtonF, btnButtonNueve, btnButtonOcho, btnButtonDecimal
         };
 
         buttonsToDisableBinario = new Button[]{
@@ -265,14 +294,19 @@ public class MainActivity extends AppCompatActivity {
                 btnButtonNueve, btnButtonDecimal
         };
 
+        buttonsDisableOperador = new Button[]{
+          btnButtonSuma, btnButtonResta, btnButtonMultiplicacion,
+          btnButtonDivision, btnButtonDelete, btnButtonDecimal
+        };
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         updateTitle(getString(R.string.decimal)); // Establecer por defecto en 'Decimal'
-        itemId = R.id.act_decimal;
-        enableButtons(buttonsToDisableHex, false); // Deshabilitar botones hexadecimales
+        itemId = R.id.act_decimal; // Establecer por defecto en 'Decimal'
+        enableButtons(buttonsDisableDecimal, false); // Deshabilitar botones hexadecimales
         return true;
     }
 
@@ -282,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
         itemId = item.getItemId();
         // Resetear valor boleano de los numeros para que no halla problemas con variables globales
         enableButtonsBi(buttonsToDisableBinario,true);
-
+        enableButtonsOperador(buttonsDisableOperador,true);
 
         // Verificar qué opción se ha seleccionado y actualizar el título del menú OPERACIONES
         if (itemId == R.id.act_binario) {
@@ -292,22 +326,22 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.act_octal) {
             updateTitle(getString(R.string.octal));
-            enableButtonsOctal(buttonsToDisableOctal, false);
+            enableButtonsOctal(buttonsToDisableOctal);
             funcionLimpiarTodo();
             return true;
         } else if (itemId == R.id.act_decimal) {
             updateTitle(getString(R.string.decimal));
-            enableButtons(buttonsToDisableHex,false);
+            enableButtonsDecimal(buttonsDisableDecimal,false);
             funcionLimpiarTodo();
             return true;
         } else if (itemId == R.id.act_hexadecimal) {
             updateTitle(getString(R.string.hexadecimal));
-            enableButtons(buttonsToDisableHex,true);
+            enableButtons(buttonsToDisableHex,false);
             funcionLimpiarTodo();
             return true;
         } else if (itemId == R.id.act_resolvente) {
             updateTitle(getString(R.string.resolvente));
-            enableButtons(buttonsToDisableHex,false);
+            enableButtonsDecimal(buttonsDisableDecimal,false);
             funcionLimpiarTodo();
             return true;
         }
@@ -334,9 +368,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void enableButtonsOctal(Button[] ignoredButtonsOctal, boolean isEnabledOctal) {
+    private void enableButtonsOctal(Button[] ignoredButtonsOctal) {
         for (Button buttons : buttonsToDisableOctal) {
-            buttons.setEnabled(isEnabledOctal);
+            buttons.setEnabled(false);
+        }
+    }
+
+    private void enableButtonsDecimal(Button[] ignoredButtonsDecimal, boolean isEnableDecimal) {
+        for (Button buttons : buttonsDisableDecimal) {
+            buttons.setEnabled(isEnableDecimal);
+        }
+    }
+
+    private void enableButtonsOperador(Button[] ignoredButtonsOperator, boolean isEnabledOperador) {
+        for (Button buttons : buttonsDisableOperador) {
+            buttons.setEnabled(isEnabledOperador);
         }
     }
 
