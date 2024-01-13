@@ -53,7 +53,7 @@ public class MainActivity3 extends AppCompatActivity {
         // Crear opciones para los Spinners
         Spinner spinnerEquivalentes = findViewById(R.id.equivalentesUno);
         String[] equivalenteItems = {"Binario", "Octal", "Decimal", "Hexadecimal"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, equivalenteItems);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.spinner_item, equivalenteItems);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEquivalentes.setAdapter(adapter);
 
@@ -62,7 +62,7 @@ public class MainActivity3 extends AppCompatActivity {
 
         Spinner spinnerOpcionesLongSim = findViewById(R.id.longitudYsimbolos);
         String[] itemsLongSim = {"Longitud", "Simbolos"};
-        ArrayAdapter<String> adapterLongSim = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, itemsLongSim);
+        ArrayAdapter<String> adapterLongSim = new ArrayAdapter<>(this,R.layout.spinner_item, itemsLongSim);
         adapterLongSim.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOpcionesLongSim.setAdapter(adapterLongSim);
 
