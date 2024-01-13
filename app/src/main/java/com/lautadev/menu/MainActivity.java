@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(siguiente);
     }
 
+    public void cambiarActivityConversor(View view){
+        Intent conversor = new Intent(this, MainActivity3.class);
+        startActivity(conversor);
+    }
+
     private void manejarOperador(String operador) {
         if(numeroActual.isEmpty() && primerNumero.isEmpty()){
             this.operador = operador;
@@ -132,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     resultado = CalculadoraHex.multiplicarHex(num1, num2);
                     break;
                 case "/":
-                    String resultadoDivisionHex = CalculadoraOctal.dividirOctal(num1, num2);
+                    String resultadoDivisionHex = CalculadoraHex.dividirHex(num1, num2);
                     if(resultadoDivisionHex.equals("NaN")){
                         resultado = resultadoDivisionHex;
                         enableButtonsOperador(buttonsDisableOperador,false);
@@ -384,6 +389,10 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemId == R.id.act_resolvente) {
             updateTitle(getString(R.string.resolvente));
             cambiarActivity(null);
+            return true;
+        }else if (itemId == R.id.act_conversor) {
+            updateTitle(getString(R.string.conversor));
+            cambiarActivityConversor(null);
             return true;
         }
 

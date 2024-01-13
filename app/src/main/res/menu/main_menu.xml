@@ -31,4 +31,9 @@
         android:title="@string/resolvente"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/act_conversor"
+        android:title="@string/conversor"
+        app:showAsAction="never"/>
+
 </menu>

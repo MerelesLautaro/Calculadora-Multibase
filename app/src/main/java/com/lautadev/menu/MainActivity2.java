@@ -27,6 +27,11 @@ public class MainActivity2 extends AppCompatActivity {
         startActivity(anterior);
     }
 
+    public void cambiarActivityConversor(View view){
+        Intent conversor = new Intent(this, MainActivity3.class);
+        startActivity(conversor);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,9 @@ public class MainActivity2 extends AppCompatActivity {
         if (itemId == R.id.act_binario || itemId == R.id.act_octal || itemId == R.id.act_decimal || itemId == R.id.act_hexadecimal ) {
             tipoOperacion = obtenerTipoOperacion(itemId);
             cambiarActivityPrincipal(null);
+            return true;
+        } else if (itemId == R.id.act_conversor){
+            cambiarActivityConversor(null);
             return true;
         }
 
