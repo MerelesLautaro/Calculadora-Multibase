@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 public class CalculadoraBinaria {
     public static String sumarBi(String num1, String num2) {

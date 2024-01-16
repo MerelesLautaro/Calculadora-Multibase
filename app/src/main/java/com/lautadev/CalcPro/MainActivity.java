@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Button[] buttonsEnableAll;
 
-    private String numeroActual = ""; // Variable para almacenar los números ingresados
-    private String operador = ""; // Variable para almacenar el operador seleccionado
-    private String primerNumero = ""; // Variable para almacenar el primer número
+    private String numeroActual = "";
+    private String operador = "";
+    private String primerNumero = "";
 
     private int itemId;
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     return resultado;
 
                 default:
-                    resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
+                    resultado = "0";
             }
         } else if (itemId == R.id.act_octal) {
             switch (operador) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     resultado = resultadoDivisionOctal;
                     return resultado;
                 default:
-                    resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
+                    resultado = "0";
             }
         }else if (itemId == R.id.act_hexadecimal) {
             switch (operador) {
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     resultado = resultadoDivisionHex;
                     return resultado;
                 default:
-                    resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
+                    resultado = "0";
             }
         }else if (itemId == R.id.act_binario) {
             switch (operador) {
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     resultado = CalculadoraBinaria.multiplicarBi(num1, num2);
                     break;
                 case "/":
-                    String resultadoDivisionBi = CalculadoraOctal.dividirOctal(num1, num2);
+                    String resultadoDivisionBi = CalculadoraBinaria.dividirBi(num1, num2);
                     if(resultadoDivisionBi.equals("NaN")){
                         resultado = resultadoDivisionBi;
                         enableButtonsOperador(buttonsDisableOperador,false);
@@ -169,10 +169,9 @@ public class MainActivity extends AppCompatActivity {
                     resultado = resultadoDivisionBi;
                     return resultado;
                 default:
-                    resultado = "0"; // Manejar operador inválido, en este caso se devuelve 0
+                    resultado = "0";
             }
         } else {
-            // Manejo de otros casos o valores por defecto
             return "0";
         }
         return resultado;
@@ -205,14 +204,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Asignar variable a los botones mediante el ID
         txtTextoOperacion = findViewById(R.id.txtOperacion);
-        txtTextoOperacion.setFocusable(true);
-        txtTextoOperacion.setFocusableInTouchMode(true);
-        txtTextoOperacion.setInputType(InputType.TYPE_NULL);
 
         txtVistaPreliminar = findViewById(R.id.txtVistaPreliminar);
-        txtVistaPreliminar.setFocusable(true);
-        txtVistaPreliminar.setFocusableInTouchMode(true);
-        txtVistaPreliminar.setInputType(InputType.TYPE_NULL);
 
         Button btnButtonDelete = findViewById(R.id.btnDelete);
         Button btnButtonCero = findViewById(R.id.btnCero);
@@ -274,7 +267,6 @@ public class MainActivity extends AppCompatActivity {
             enableButtonsOperador(buttonsDisableOperador,true);
             Button clickedButton = (Button) v;
             manejarNumero(clickedButton.getText().toString());
-            //resetOperadores(); // Reiniciar los operadores al ingresar un número
         };
 
         // Asignar el mismo Listener a múltiples botones

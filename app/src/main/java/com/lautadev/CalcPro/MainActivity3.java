@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -158,7 +157,7 @@ public class MainActivity3 extends AppCompatActivity {
                     return "Tipo de entrada no válido";
             }
         } catch (NumberFormatException e) {
-            return "Error: Valor no válido";
+            return "Verifique los valores ingresados. Ingrese números válidos.";
         }
     }
 
@@ -213,7 +212,7 @@ public class MainActivity3 extends AppCompatActivity {
                 return "Opción no válida";
             }
         } catch (NumberFormatException e) {
-            return "Error: Valor no válido";
+            return "Verifique los valores ingresados. Ingrese números válidos.";
         }
     }
 }

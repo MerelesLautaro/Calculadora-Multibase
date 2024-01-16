@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 public class CalculadoraHex {
     public static String sumarHex(String num1, String num2) {

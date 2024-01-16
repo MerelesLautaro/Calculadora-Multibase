@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "menu"
+rootProject.name = "CalcPro"
 include(":app")
  
