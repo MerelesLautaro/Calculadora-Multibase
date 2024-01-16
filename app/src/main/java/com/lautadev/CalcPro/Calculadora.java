@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 public class Calculadora {
     public static double sumar(double num1, double num2) {
@@ -15,8 +15,7 @@ public class Calculadora {
 
     public static double dividir(double num1, double num2) {
         if (num2 == 0) {
-            // Manejo de división por cero
-            return Double.NaN; // Puedes cambiar esto por un manejo específico
+            return Double.NaN;
         }
         return num1 / num2;
     }

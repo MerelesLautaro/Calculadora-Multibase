@@ -1,4 +1,4 @@
-package com.lautadev.menu;
+package com.lautadev.CalcPro;
 
 public class CalculadoraOctal {
     public static String sumarOctal(String num1, String num2) {
